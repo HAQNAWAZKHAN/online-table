@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        #date {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid green;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            color: black;
+            font-size: 12px;
+        }
+        th {
+            background-color: #d9f9d9; /* Light green background for headers */
+        }
+        td {
+            background-color: #f0fff0; /* Light green background for table cells */
+        }
+        input[type="text"] {
+            width: 100%;
+            border: none;
+            background-color: inherit;
+            font-size: 12px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="title" contenteditable="true">Editable Title</div>
+    <div id="date"></div>
+
+    <table id="editableTable">
+        <thead>
+            <tr>
+                <th contenteditable="true">Column 1</th>
+                <th contenteditable="true">Column 2</th>
+                <th contenteditable="true">Column 3</th>
+                <th contenteditable="true">Column 4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JavaScript will insert rows here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Function to update the date
+        function updateDate() {
+            const dateElement = document.getElementById('date');
+            const now = new Date();
+            const dateString = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+            dateElement.textContent = 'Last Updated: ' + dateString;
+        }
+
+        // Call the date update function initially
+        updateDate();
+
+        // Create table rows and columns dynamically
+        const tableBody = document.querySelector('#editableTable tbody');
+        const rows = 50;
+        const cols = 4;
+
+        for (let i = 0; i < rows; i++) {
+            const row = document.createElement('tr');
+            for (let j = 0; j < cols; j++) {
+                const cell = document.createElement('td');
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = 'Edit...';
+                cell.appendChild(input);
+                row.appendChild(cell);
+            }
+            tableBody.appendChild(row);
+        }
+
+        // Update date whenever the table is edited
+        document.getElementById('editableTable').addEventListener('input', updateDate);
+    </script>
+
+</body>
+</html>
